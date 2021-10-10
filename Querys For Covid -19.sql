@@ -40,7 +40,7 @@ ORDER BY 1,2
 SELECT 
 	location,
 	date,
-    population,
+        population,
 	total_cases,
 	(total_cases/population)*100 As 'Percentage of Total Cases'
 FROM PortfolioProject_DA..CovidDeaths
@@ -53,7 +53,7 @@ ORDER BY 1,2
 
 SELECT 
 	location,
-    population,
+        population,
 	max(total_cases) AS 'Highest Affected Count',
 	max((total_cases/population))*100 As 'Percentage Population Affected'
 FROM PortfolioProject_DA..CovidDeaths
@@ -66,7 +66,7 @@ ORDER BY 'Percentage Population Affected' desc
 
 SELECT 
 	location,
-    --population,
+        --population,
 	max(cast(total_deaths as int)) AS 'Total Death Count'
 	--max((cast(total_deaths as int)/population))*100 As 'Percentage of Deaths'
 FROM PortfolioProject_DA..CovidDeaths
@@ -82,7 +82,7 @@ ORDER BY 'Total Death Count' desc
 
 SELECT 
 	continent,
-    --population,
+        --population,
 	max(cast(total_deaths as int)) AS 'Total Death Count'
 	--max((cast(total_deaths as int)/population))*100 As 'Percentage of Deaths'
 FROM PortfolioProject_DA..CovidDeaths
@@ -96,7 +96,7 @@ ORDER BY 'Total Death Count' desc
 
 SELECT 
 	continent,
-    --population,
+        --population,
 	max(cast(total_deaths as int)) AS 'Total Death Count'
 	--max((cast(total_deaths as int)/population))*100 As 'Percentage of Deaths'
 FROM PortfolioProject_DA..CovidDeaths
@@ -111,7 +111,7 @@ ORDER BY 'Total Death Count' desc
 Select 
      SUM(new_cases) as total_cases, 
      SUM(cast(new_deaths as int)) as total_deaths, 
-	 SUM(cast(new_deaths as int))/SUM(New_Cases)*100 as DeathPercentage
+     SUM(cast(new_deaths as int))/SUM(New_Cases)*100 as DeathPercentage
 From PortfolioProject_DA..CovidDeaths
 --Where location like '%states%'
 where continent is not null 
