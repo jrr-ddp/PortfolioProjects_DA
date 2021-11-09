@@ -131,4 +131,73 @@ SET OwnerState = PARSENAME(REPLACE(OwnerAddress, ',', '.'),1)
 SELECT DISTINCT(SoldAsVacant), COUNT(SoldAsVacant)
 FROM PortfolioProject_DA.dbo.NashvilleHousing
 GROUP BY SoldAsVacant
-w
+ORDER BY 2
+
+
+SELECT 
+	SoldAsVacant,
+	CASE WHEN SoldAsVacant = 'Y' THEN 'Yes'
+		 WHEN SoldAsVacant = 'N' THEN 'No'
+		 ELSE SoldAsVacant
+		 END
+FROM PortfolioProject_DA.dbo.NashvilleHousing
+
+UPDATE PortfolioProject_DA.dbo.NashvilleHousing
+SET SoldAsVacant = CASE WHEN SoldAsVacant = 'Y' THEN 'Yes'
+		 WHEN SoldAsVacant = 'N' THEN 'No'
+		 ELSE SoldAsVacant
+		 END
+
+
+
+
+
+------Remove Duplicates
+WITH RowNumCTE AS(
+SELECT *,
+	ROW_NUMBER() OVER (
+	PARTITION BY ParcelID,
+				PropertyAddress,
+				SalePrice,
+				SaleDate,
+				LegalReference
+				ORDER BY
+				UniqueID)
+				row_num
+FROM PortfolioProject_DA.dbo.NashvilleHousing
+)
+DELETE 
+FROM RowNumCTE
+WHERE row_num > 1
+--ORDER BY PropertyAddress
+
+---Select Statement
+WITH RowNumCTE AS(
+SELECT *,
+	ROW_NUMBER() OVER (
+	PARTITION BY ParcelID,
+				PropertyAddress,
+				SalePrice,
+				SaleDate,
+				LegalReference
+				ORDER BY
+				UniqueID)
+				row_num
+FROM PortfolioProject_DA.dbo.NashvilleHousing
+)
+SELECT * 
+FROM RowNumCTE
+WHERE row_num > 1
+
+
+
+
+
+
+-------Delete Unused Columns
+
+SELECT *
+FROM PortfolioProject_DA.dbo.NashvilleHousing
+
+ALTER TABLE PortfolioProject_DA.dbo.NashvilleHousing
+DROP COLUMN OwnerAddress, TaxDistrict, PropertyAddress, SaleDate
